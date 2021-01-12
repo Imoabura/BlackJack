@@ -4,14 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 public class CardDisplay : MonoBehaviour
 {
     [SerializeField]
-    Image cardImage;
+    SpriteRenderer cardImage;
+    [SerializeField]
+    Sprite cardBack;
     [SerializeField]
     TextMeshProUGUI cardName;
     [SerializeField]
     Card card;
+
+    bool isFaceUp = false;
 
     private void Start()
     {
@@ -26,8 +31,22 @@ public class CardDisplay : MonoBehaviour
     // Updates the card's visuals
     void UpdateCard()
     {
-        cardImage.sprite = card.image;
+        if (!isFaceUp)
+        {
+            cardImage.sprite = cardBack;
+        }
+        else
+        {
+            cardImage.sprite = card.image;
+        }
         cardName.text = GetName();
+    }
+
+    // flips card
+    public void flipCard()
+    {
+        isFaceUp = !isFaceUp;
+        UpdateCard();
     }
 
     // Sets Card data and updates card's display / if card is null, do nothing
