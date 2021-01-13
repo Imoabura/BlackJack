@@ -17,9 +17,16 @@ public class CardDisplay : MonoBehaviour
     Card card;
 
     bool isFaceUp = false;
+    Animator animator;
 
-    private void Start()
+    void Awake()
     {
+        animator = GetComponent<Animator>();
+        if (cardBack != null)
+        {
+            cardImage.sprite = cardBack;
+            ShowName(false);
+        }
         if (card == null)
         {
             Debug.LogWarning("No card data set!");
@@ -28,9 +35,31 @@ public class CardDisplay : MonoBehaviour
         UpdateCard();
     }
 
+    IEnumerator FlipCardAnimation()
+    {
+        animator.Play("CardFlip");
+        yield return new WaitForSeconds(.25f);
+        isFaceUp = !isFaceUp;
+        cardImage.sprite = (isFaceUp) ? card.image : cardBack;
+        if (!isFaceUp)
+        {
+            ShowName(false);
+        }
+    }
+
+    public void SetCardBack(Sprite cardBack)
+    {
+        this.cardBack = cardBack;
+        if (!isFaceUp)
+        {
+            UpdateCard();
+        }
+    }
+
     // Updates the card's visuals
     void UpdateCard()
     {
+        cardName.text = GetName();
         if (!isFaceUp)
         {
             cardImage.sprite = cardBack;
@@ -39,14 +68,17 @@ public class CardDisplay : MonoBehaviour
         {
             cardImage.sprite = card.image;
         }
-        cardName.text = GetName();
     }
 
     // flips card
-    public void flipCard()
+    public void FlipCard()
     {
-        isFaceUp = !isFaceUp;
-        UpdateCard();
+        if (card == null)
+        {
+            Debug.LogWarning("Cannot flip without card data!");
+            return;
+        }
+        StartCoroutine(FlipCardAnimation());
     }
 
     // Sets Card data and updates card's display / if card is null, do nothing
@@ -62,13 +94,21 @@ public class CardDisplay : MonoBehaviour
     }
 
     // toggle visibility of name text
-    public void ShowName(bool enable)
+    void ShowName(bool enable)
     {
         cardName.enabled = enable;
     }
 
+    public void ToggleName()
+    {
+        if (isFaceUp)
+        {
+            cardName.enabled = !cardName.enabled;
+        }
+    }
+
     // Translate card data to name (E.g., AS = Ace of Spades)
-    string GetName()
+    public string GetName()
     {
         string result = "";
         switch(card.rank)
