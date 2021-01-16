@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CardRank
 {
-    ACE,
+    ACE, // 0
     TWO,
     THREE,
     FOUR,
@@ -14,7 +14,7 @@ public enum CardRank
     EIGHT,
     NINE,
     TEN,
-    JACK,
+    JACK,   // 10
     QUEEN,
     KING,
     RANK_MAX
@@ -35,4 +35,17 @@ public class Card : ScriptableObject
     public Sprite image;
     public CardSuit suit;
     public CardRank rank;
+
+    public int GetValue()   // For Simple BlackJack
+    {
+        int num = (int)rank;
+        if (num < 9)    // If 9 or lower
+        {
+            return num + 1;
+        }
+        else   // If 10 or higher
+        {
+            return 10;
+        }
+    }
 }

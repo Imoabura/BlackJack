@@ -35,6 +35,11 @@ public class CardDisplay : MonoBehaviour
         UpdateCard();
     }
 
+    public bool IsFaceUp()
+    {
+        return isFaceUp;
+    }
+
     IEnumerator FlipCardAnimation()
     {
         animator.Play("CardFlip");
