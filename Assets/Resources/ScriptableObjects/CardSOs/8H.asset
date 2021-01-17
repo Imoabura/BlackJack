@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: 8H
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: f98da5d067f8ab5489ee411d2a438700, type: 3}
+  texture: {fileID: 2800000, guid: f98da5d067f8ab5489ee411d2a438700, type: 3}
   suit: 2
   rank: 7

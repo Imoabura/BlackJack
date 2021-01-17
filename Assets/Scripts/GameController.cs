@@ -69,29 +69,33 @@ public class GameController : MonoBehaviour
                 if (playerHand.GetValue() > 21)
                 {
                     state = GameState.gameOver;
-                    Debug.Log("You lose. Dealer Wins!");
+                    Debug.Log("You busted. Dealer Wins!");
                 }
             }
         }
         if (state == GameState.dealerTurn)
         {
-            if(dealerHand.GetValue() < 17)
+            Debug.Log("Dealer points: " + dealerHand.GetValue());
+            if (dealerHand.GetValue() < 17)
             {
                 dealerHand.DrawCards(1);
-                if (playerHand.GetValue() > 21)
+                if (dealerHand.GetValue() > 21)
                 {
                     state = GameState.gameOver;
-                    Debug.Log("You Win!");
+                    Debug.Log("Dealer busted. You Win!");
                 }
-            }
-            state = GameState.gameOver;
-            if (playerHand.GetValue() > dealerHand.GetValue())
-            {
-                Debug.Log("You Win!");
             }
             else
             {
-                Debug.Log("Dealer Wins!");
+                state = GameState.gameOver;
+                if (playerHand.GetValue() > dealerHand.GetValue())
+                {
+                    Debug.Log("You Win!");
+                }
+                else
+                {
+                    Debug.Log("Dealer Wins!");
+                }
             }
         }
         if (state == GameState.gameOver)

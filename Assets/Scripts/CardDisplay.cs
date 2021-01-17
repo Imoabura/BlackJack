@@ -16,15 +16,23 @@ public class CardDisplay : MonoBehaviour
     [SerializeField]
     Card card;
 
+    [SerializeField] Texture backTexture;
+
+    MaterialPropertyBlock propBlock;
+
     bool isFaceUp = false;
     Animator animator;
 
     void Awake()
     {
+        propBlock = new MaterialPropertyBlock();
         animator = GetComponent<Animator>();
         if (cardBack != null)
         {
             cardImage.sprite = cardBack;
+            cardImage.GetPropertyBlock(propBlock);
+            propBlock.SetTexture("InputTexture", backTexture);
+            cardImage.SetPropertyBlock(propBlock, 0);
             ShowName(false);
         }
         if (card == null)
@@ -46,10 +54,17 @@ public class CardDisplay : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         isFaceUp = !isFaceUp;
         cardImage.sprite = (isFaceUp) ? card.image : cardBack;
+        cardImage.GetPropertyBlock(propBlock);
         if (!isFaceUp)
         {
             ShowName(false);
+            propBlock.SetTexture("InputTexture", backTexture);
         }
+        else
+        {
+            propBlock.SetTexture("InputTexture", card.texture);
+        }
+        cardImage.SetPropertyBlock(propBlock, 0);
     }
 
     public void SetCardBack(Sprite cardBack)
@@ -65,14 +80,18 @@ public class CardDisplay : MonoBehaviour
     void UpdateCard()
     {
         cardName.text = GetName();
+        cardImage.GetPropertyBlock(propBlock);
         if (!isFaceUp)
         {
             cardImage.sprite = cardBack;
+            propBlock.SetTexture("InputTexture", backTexture);
         }
         else
         {
             cardImage.sprite = card.image;
+            propBlock.SetTexture("InputTexture", card.texture);
         }
+        cardImage.SetPropertyBlock(propBlock);
     }
 
     // flips card

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: 6C
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 98265f049c42bf649bb3587bbdc513d5, type: 3}
+  texture: {fileID: 2800000, guid: 98265f049c42bf649bb3587bbdc513d5, type: 3}
   suit: 0
   rank: 5

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: AD
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 1a39995a1107d9f4e80805df3ca53f1c, type: 3}
+  texture: {fileID: 2800000, guid: 1a39995a1107d9f4e80805df3ca53f1c, type: 3}
   suit: 1
   rank: 0

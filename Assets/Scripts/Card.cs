@@ -33,6 +33,7 @@ public enum CardSuit
 public class Card : ScriptableObject
 {
     public Sprite image;
+    public Texture texture;
     public CardSuit suit;
     public CardRank rank;
 
